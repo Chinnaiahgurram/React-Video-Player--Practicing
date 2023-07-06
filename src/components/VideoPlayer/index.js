@@ -1,40 +1,45 @@
-import {Component} from 'react'
-import './index.css'
-import ReactPlayer from 'react-player'
+import {PieChart, Pie, Cell, Legend, ResponsiveContainer} from 'recharts'
 
-const url = 'https://www.youtube.com/watch?v=Wq22t5FvlQY'
+const data = [
+  {
+    count: 809680,
+    language: 'Telugu',
+  },
+  {
+    count: 4555697,
+    language: 'Hindi',
+  },
+  {
+    count: 12345657,
+    language: 'English',
+  },
+]
 
-class VideoPlayer extends Component {
-  state = {isPlaying: false}
+const App = () => (
+  <ResponsiveContainer width="100%" height={300}>
+    <PieChart>
+      <Pie
+        cx="70%"
+        cy="40%"
+        data={data}
+        startAngle={0}
+        endAngle={360}
+        innerRadius="40%"
+        outerRadius="70%"
+        dataKey="count"
+      >
+        <Cell name="Telugu" fill="#fecba6" />
+        <Cell name="Hindi" fill="#b3d23f" />
+        <Cell name="English" fill="#a44c9e" />
+      </Pie>
+      <Legend
+        iconType="circle"
+        layout="vertical"
+        verticalAlign="left"
+        align="right"
+      />
+    </PieChart>
+  </ResponsiveContainer>
+)
 
-  onClickPlay = () => {
-    this.setState(prevState => ({isPlaying: !prevState.isPlaying}))
-  }
-
-  render() {
-    const {isPlaying} = this.state
-    const btnText = isPlaying ? 'pause' : 'play'
-    return (
-      <div className="video-container">
-        <h1 className="heading">Video Player</h1>
-        <div className="responsive-container">
-          <ReactPlayer
-            url={url}
-            playing={isPlaying}
-            light=<img
-              src="https://res.cloudinary.com/dpb6spuxz/image/upload/v1668146297/CHINNA_1_kafkb6.jpg"
-              width="300"
-              alt="Thumbnail"
-            />
-            controls
-          />
-        </div>
-        <button type="button" className="button" onClick={this.onClickPlay}>
-          {btnText}
-        </button>
-      </div>
-    )
-  }
-}
-
-export default VideoPlayer
+export default App
